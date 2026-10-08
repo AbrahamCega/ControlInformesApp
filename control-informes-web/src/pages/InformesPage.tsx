@@ -1025,7 +1025,7 @@ export default function InformesPage() {
                   <List dense disablePadding>
                     {importState.result.errores.map((e, i) => (
                       <ListItem key={i} disablePadding>
-                        <ListItemText primary={e} primaryTypographyProps={{ variant: 'body2' }} />
+                        <ListItemText primary={e} slotProps={{ primary: { variant: 'body2' } }} />
                       </ListItem>
                     ))}
                   </List>

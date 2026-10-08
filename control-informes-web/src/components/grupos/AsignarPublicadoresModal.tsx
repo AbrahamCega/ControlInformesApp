@@ -151,8 +151,9 @@ export default function AsignarPublicadoresModal({
                   <ListItemText
                     primary={p.nombreCompleto}
                     secondary={TIPO_LABEL[p.tipo] ?? ''}
-                    primaryTypographyProps={{ fontSize: '0.875rem', fontWeight: 500 }}
-                    secondaryTypographyProps={{ fontSize: '0.75rem', color: '#637381' }}
+                    slotProps={{ primary: { sx: { fontSize: '0.875rem', fontWeight: 500 } }, secondary: { sx: { fontSize: '0.75rem', color: '#637381' } } }}
+                   
+                   
                   />
                 </ListItem>
               ))}

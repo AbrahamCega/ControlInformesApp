@@ -19,19 +19,21 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import BadgeIcon from '@mui/icons-material/Badge';
 import { CustomSelect, Loader } from '../components';
 import { publicadoresService } from '../services/publicadoresService';
-import type { TarjetaPublicador } from '../types';
+import type { TarjetaPublicadorDto } from '../types';
+import { generarOpcionesAno, calcularAnoServicioActual } from '../utils/anoServicio';
 
-const currentYear = new Date().getFullYear();
-const ANOS_OPTIONS = Array.from({ length: 5 }, (_, i) => ({
-  value: currentYear - i,
-  label: `${currentYear - i}`,
-}));
+const ANOS_OPTIONS = generarOpcionesAno().map((o) => ({ value: o.valor, label: o.etiqueta }));
+
+const NOMBRES_MES = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+];
 
 export default function TarjetaPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [anoServicio, setAnoServicio] = useState<number>(currentYear);
-  const [tarjeta, setTarjeta] = useState<TarjetaPublicador | null>(null);
+  const [anoServicio, setAnoServicio] = useState<number>(calcularAnoServicioActual());
+  const [tarjeta, setTarjeta] = useState<TarjetaPublicadorDto | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function TarjetaPage() {
     const fetchTarjeta = async () => {
       setLoading(true);
       try {
-        const data = await publicadoresService.getTarjeta(Number(id), anoServicio);
+        const data = await publicadoresService.getTarjeta(id, anoServicio);
         setTarjeta(data);
       } catch {
         // Error handled by interceptor
@@ -52,8 +54,8 @@ export default function TarjetaPage() {
 
   const totales = tarjeta
     ? {
-        cursos: tarjeta.meses.reduce((s, m) => s + m.cursos, 0),
-        horas: tarjeta.meses.reduce((s, m) => s + m.horas, 0),
+        cursos: tarjeta.meses.reduce((s, m) => s + m.cursosBiblicos, 0),
+        horas: tarjeta.meses.reduce((s, m) => s + (m.horas ?? 0), 0),
         participaciones: tarjeta.meses.filter((m) => m.participo).length,
       }
     : null;
@@ -94,7 +96,7 @@ export default function TarjetaPage() {
             </Typography>
             {tarjeta && (
               <Typography variant="body2" sx={{ color: '#637381' }}>
-                {tarjeta.nombre}
+                {tarjeta.nombreCompleto}
               </Typography>
             )}
           </Box>
@@ -127,7 +129,8 @@ export default function TarjetaPage() {
                   bgcolor: kpi.color,
                 }}
               >
-                <Typography variant="h4" fontWeight={700} sx={{ color: kpi.textColor }}>
+                <Typography variant="h4"
+          sx={{ fontWeight: 700, color: kpi.textColor, }}>
                   {kpi.value}
                 </Typography>
                 <Typography variant="body2" sx={{ color: kpi.textColor, opacity: 0.8, mt: 0.5 }}>
@@ -156,8 +159,8 @@ export default function TarjetaPage() {
             </TableHead>
             <TableBody>
               {tarjeta.meses.map((mes, idx) => (
-                <TableRow key={mes.mes} sx={{ bgcolor: idx % 2 === 0 ? '#fff' : '#fafbff' }}>
-                  <TableCell sx={{ fontWeight: 500, color: '#374151' }}>{mes.mes}</TableCell>
+                <TableRow key={`${mes.ano}-${mes.mes}`} sx={{ bgcolor: idx % 2 === 0 ? '#fff' : '#fafbff' }}>
+                  <TableCell sx={{ fontWeight: 500, color: '#374151' }}>{NOMBRES_MES[mes.mes - 1] ?? mes.mes}</TableCell>
                   <TableCell align="center">
                     <Chip
                       label={mes.participo ? 'Participó' : 'No participó'}
@@ -173,19 +176,15 @@ export default function TarjetaPage() {
                   <TableCell align="center">
                     <Typography
                       variant="body2"
-                      fontWeight={mes.cursos > 0 ? 700 : 400}
-                      sx={{ color: mes.cursos > 0 ? '#1976d2' : '#9e9e9e' }}
-                    >
-                      {mes.cursos > 0 ? mes.cursos : '—'}
+          sx={{ fontWeight: mes.cursosBiblicos > 0 ? 700 : 400, color: mes.cursosBiblicos > 0 ? '#1976d2' : '#9e9e9e' }}>
+                      {mes.cursosBiblicos > 0 ? mes.cursosBiblicos : '—'}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography
                       variant="body2"
-                      fontWeight={mes.horas > 0 ? 700 : 400}
-                      sx={{ color: mes.horas > 0 ? '#7b1fa2' : '#9e9e9e' }}
-                    >
-                      {mes.horas > 0 ? mes.horas : '—'}
+          sx={{ fontWeight: (mes.horas ?? 0) > 0 ? 700 : 400, color: (mes.horas ?? 0) > 0 ? '#7b1fa2' : '#9e9e9e' }}>
+                      {(mes.horas ?? 0) > 0 ? mes.horas : '—'}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -208,12 +207,14 @@ export default function TarjetaPage() {
                       />
                     </TableCell>
                     <TableCell align="center">
-                      <Typography variant="body2" fontWeight={700} sx={{ color: '#1565c0' }}>
+                      <Typography variant="body2"
+          sx={{ fontWeight: 700, color: '#1565c0', }}>
                         {totales.cursos}
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <Typography variant="body2" fontWeight={700} sx={{ color: '#7b1fa2' }}>
+                      <Typography variant="body2"
+          sx={{ fontWeight: 700, color: '#7b1fa2', }}>
                         {totales.horas}
                       </Typography>
                     </TableCell>

@@ -116,7 +116,8 @@ export default function ExcelPage() {
         {/* Upload section */}
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid rgba(145,158,171,0.12)' }}>
-            <Typography variant="subtitle1" fontWeight={600} sx={{ color: '#1a2027', mb: 2.5 }}>
+            <Typography variant="subtitle1"
+          sx={{ fontWeight: 600, color: '#1a2027', mb: 2.5, }}>
               Importar Informes desde Excel
             </Typography>
 
@@ -157,7 +158,8 @@ export default function ExcelPage() {
               {file ? (
                 <>
                   <CheckCircleIcon sx={{ fontSize: 48, color: '#388e3c', mb: 1 }} />
-                  <Typography variant="subtitle1" fontWeight={600} sx={{ color: '#2e7d32' }}>
+                  <Typography variant="subtitle1"
+          sx={{ fontWeight: 600, color: '#2e7d32', }}>
                     {file.name}
                   </Typography>
                   <Typography variant="body2" sx={{ color: '#637381', mt: 0.5 }}>
@@ -167,7 +169,8 @@ export default function ExcelPage() {
               ) : (
                 <>
                   <InsertDriveFileIcon sx={{ fontSize: 48, color: '#90caf9', mb: 1 }} />
-                  <Typography variant="subtitle1" fontWeight={600} sx={{ color: '#374151' }}>
+                  <Typography variant="subtitle1"
+          sx={{ fontWeight: 600, color: '#374151', }}>
                     Arrastra el archivo aquí
                   </Typography>
                   <Typography variant="body2" sx={{ color: '#637381', mt: 0.5 }}>
@@ -208,7 +211,8 @@ export default function ExcelPage() {
             <Box sx={{ mx: 'auto', width: 64, height: 64, borderRadius: 3, bgcolor: '#e3f2fd', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <DownloadIcon sx={{ fontSize: 32, color: '#1976d2' }} />
             </Box>
-            <Typography variant="subtitle1" fontWeight={600} sx={{ color: '#1a2027' }}>
+            <Typography variant="subtitle1"
+          sx={{ fontWeight: 600, color: '#1a2027', }}>
               Plantilla Excel
             </Typography>
             <Typography variant="body2" sx={{ color: '#637381' }}>
@@ -234,7 +238,8 @@ export default function ExcelPage() {
             sx={{ mb: 2, borderRadius: 2.5 }}
             icon={result.errores.length === 0 ? <CheckCircleIcon /> : undefined}
           >
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant="body2"
+          sx={{ fontWeight: 600, }}>
               {result.errores.length === 0
                 ? `¡Importación exitosa! ${result.exitosos} registros procesados.`
                 : `Importación con observaciones — Total: ${result.totalRegistros} | Exitosos: ${result.exitosos} | Errores: ${result.errores.length}`}

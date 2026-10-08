@@ -5,8 +5,6 @@ import PublicadoresPage from '../pages/PublicadoresPage';
 import TarjetaPage from '../pages/TarjetaPage';
 import InformesPage from '../pages/InformesPage';
 import AsistenciaPage from '../pages/AsistenciaPage';
-import ReportesPage from '../pages/ReportesPage';
-import ExcelPage from '../pages/ExcelPage';
 import GruposPage from '../pages/GruposPage';
 import LoginPage from '../features/auth/pages/LoginPage';
 import RequireAuth from '../components/RequireAuth';

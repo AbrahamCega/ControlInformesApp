@@ -17,7 +17,7 @@ export interface ImportarPlantillaResult {
 
 export const asistenciaService = {
   getListado: (filtros: FiltrosAsistenciaListado) =>
-    apiGet<PagedResult<AsistenciaDto>>('/asistencia', filtros as Record<string, unknown>),
+    apiGet<PagedResult<AsistenciaDto>>('/asistencia', filtros as unknown as Record<string, unknown>),
 
   getById: (id: string) =>
     apiGet<AsistenciaDto>(`/asistencia/${id}`),

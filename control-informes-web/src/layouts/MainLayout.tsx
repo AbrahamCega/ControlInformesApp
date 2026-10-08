@@ -23,8 +23,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import DescriptionIcon from '@mui/icons-material/Description';
 import EventIcon from '@mui/icons-material/Event';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -107,9 +105,7 @@ export default function MainLayout() {
         <Box>
           <Typography
             variant="subtitle1"
-            fontWeight={700}
-            sx={{ color: '#1a2027', lineHeight: 1.2, fontSize: '0.9rem' }}
-          >
+          sx={{ fontWeight: 700, color: '#1a2027', lineHeight: 1.2, fontSize: '0.9rem', }}>
             Control Informes
           </Typography>
           <Typography variant="caption" sx={{ color: '#637381', fontSize: '0.7rem' }}>
@@ -178,11 +174,12 @@ export default function MainLayout() {
                   </ListItemIcon>
                   <ListItemText
                     primary={item.text}
-                    primaryTypographyProps={{
+                    slotProps={{ primary: { sx: {
                       fontSize: '0.875rem',
                       fontWeight: isActive ? 600 : 500,
                       color: isActive ? '#1565c0' : '#374151',
-                    }}
+                    } } }}
+                   
                   />
                 </ListItemButton>
               </ListItem>
@@ -219,7 +216,8 @@ export default function MainLayout() {
             {user?.name?.charAt(0).toUpperCase() ?? 'U'}
           </Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" fontWeight={600} noWrap sx={{ color: '#1a2027', fontSize: '0.82rem' }}>
+            <Typography variant="body2" noWrap
+          sx={{ fontWeight: 600, color: '#1a2027', fontSize: '0.82rem', }}>
               {user?.name ?? 'Usuario'}
             </Typography>
             <Typography variant="caption" noWrap sx={{ color: '#637381', fontSize: '0.72rem' }}>

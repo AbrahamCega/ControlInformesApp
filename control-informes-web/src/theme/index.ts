@@ -243,18 +243,21 @@ const theme = createTheme({
     },
     MuiAlert: {
       styleOverrides: {
-        root: { borderRadius: 12 },
-        filledSuccess: {
-          background: 'linear-gradient(135deg, #2e7d32, #388e3c)',
-        },
-        filledError: {
-          background: 'linear-gradient(135deg, #c62828, #d32f2f)',
-        },
-        filledWarning: {
-          background: 'linear-gradient(135deg, #e65100, #f57c00)',
-        },
-        filledInfo: {
-          background: 'linear-gradient(135deg, #01579b, #0288d1)',
+        root: {
+          borderRadius: 12,
+          // MUI v9 ya no acepta las claves filledXxx en styleOverrides
+          '&.MuiAlert-filledSuccess': {
+            background: 'linear-gradient(135deg, #2e7d32, #388e3c)',
+          },
+          '&.MuiAlert-filledError': {
+            background: 'linear-gradient(135deg, #c62828, #d32f2f)',
+          },
+          '&.MuiAlert-filledWarning': {
+            background: 'linear-gradient(135deg, #e65100, #f57c00)',
+          },
+          '&.MuiAlert-filledInfo': {
+            background: 'linear-gradient(135deg, #01579b, #0288d1)',
+          },
         },
       },
     },

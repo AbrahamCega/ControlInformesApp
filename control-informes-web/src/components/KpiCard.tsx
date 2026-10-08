@@ -1,4 +1,4 @@
-import { Card, CardContent, Box, Typography, Chip } from '@mui/material';
+import { Card, CardContent, Box, Typography } from '@mui/material';
 
 interface KpiCardProps {
   title: string;

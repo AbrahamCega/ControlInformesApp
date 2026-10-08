@@ -94,13 +94,6 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           error={!!errors.username}
           helperText={errors.username?.message}
           disabled={isLoading}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PersonOutlineRounded sx={{ color: '#2563eb', fontSize: 20 }} />
-              </InputAdornment>
-            ),
-          }}
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: '8px',
@@ -110,6 +103,13 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
               '&.Mui-focused fieldset': { borderColor: '#2563eb' },
             },
           }}
+          slotProps={{ input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonOutlineRounded sx={{ color: '#2563eb', fontSize: 20 }} />
+              </InputAdornment>
+            ),
+          } }}
         />
       </Box>
 
@@ -134,7 +134,16 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           error={!!errors.password}
           helperText={errors.password?.message}
           disabled={isLoading}
-          InputProps={{
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px',
+              bgcolor: '#fff',
+              '& fieldset': { borderColor: '#e5e7eb' },
+              '&:hover fieldset': { borderColor: '#2563eb' },
+              '&.Mui-focused fieldset': { borderColor: '#2563eb' },
+            },
+          }}
+          slotProps={{ input: {
             startAdornment: (
               <InputAdornment position="start">
                 <LockOutlined sx={{ color: '#2563eb', fontSize: 20 }} />
@@ -153,16 +162,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
                 </IconButton>
               </InputAdornment>
             ),
-          }}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '8px',
-              bgcolor: '#fff',
-              '& fieldset': { borderColor: '#e5e7eb' },
-              '&:hover fieldset': { borderColor: '#2563eb' },
-              '&.Mui-focused fieldset': { borderColor: '#2563eb' },
-            },
-          }}
+          } }}
         />
       </Box>
 

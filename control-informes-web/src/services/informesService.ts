@@ -11,7 +11,7 @@ import { apiGet, apiPost, apiPut, apiDelete, apiPostFormData, apiGetBlob } from 
 
 export const informesService = {
   getListado: (filtros: FiltrosInformeListado) =>
-    apiGet<PagedResult<InformeMensualDto>>('/informes', filtros as Record<string, unknown>),
+    apiGet<PagedResult<InformeMensualDto>>('/informes', filtros as unknown as Record<string, unknown>),
 
   getTotal: (ano: number, mes: number) =>
     apiGet<TotalInformeDto>('/informes/total', { ano, mes }),

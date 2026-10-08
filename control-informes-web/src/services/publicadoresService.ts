@@ -20,7 +20,7 @@ export const publicadoresService = {
     apiGet<PublicadorDto[]>('/publicadores/sin-grupo'),
 
   getListado: (filtros: FiltroPublicadorGrupoDto) =>
-    apiGet<PagedResult<PublicadorGrupoDto>>('/publicadores/listado', filtros as Record<string, unknown>),
+    apiGet<PagedResult<PublicadorGrupoDto>>('/publicadores/listado', filtros as unknown as Record<string, unknown>),
 
   getById: (id: string) =>
     apiGet<PublicadorDto>(`/publicadores/${id}`),

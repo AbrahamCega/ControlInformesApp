@@ -177,7 +177,8 @@ export default function QuitarMiembrosModal({ open, idGrupo, nombreGrupo, onClos
                         </Box>
                       }
                       secondary={m.tipoDescripcion}
-                      secondaryTypographyProps={{ fontSize: '0.75rem', color: '#637381' }}
+                    slotProps={{ secondary: { sx: { fontSize: '0.75rem', color: '#637381' } } }}
+                     
                     />
                   </ListItem>
                 );

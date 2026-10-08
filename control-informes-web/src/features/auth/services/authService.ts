@@ -1,4 +1,11 @@
 import { apiPost } from '../../../services/apiClient';
+import {
+  clearStoredAuth,
+  decodeJwtPayload,
+  getStoredToken,
+  getTokenExpiration,
+  isTokenExpired,
+} from '../tokenStorage';
 
 export interface LoginCredentials {
   username: string;
@@ -15,33 +22,13 @@ export interface AuthUser {
 export interface LoginResponse {
   user: AuthUser;
   token: string;
+  /** Expiración en milisegundos (epoch), o `null` si el token no la declara. */
+  expiracion: number | null;
 }
 
 interface TokenResult {
   token: string;
   expiracion: string;
-}
-
-interface JwtPayload {
-  sub?: string;
-  unique_name?: string;
-  role?: string;
-  [key: string]: unknown;
-}
-
-function decodeJwtPayload(token: string): JwtPayload {
-  try {
-    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-    const json = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + c.charCodeAt(0).toString(16).padStart(2, '0'))
-        .join(''),
-    );
-    return JSON.parse(json) as JwtPayload;
-  } catch {
-    return {};
-  }
 }
 
 export const authService = {
@@ -51,7 +38,11 @@ export const authService = {
       Password: credentials.password,
     });
 
-    const payload = decodeJwtPayload(result.token);
+    if (!result?.token) {
+      throw new Error('El servidor no devolvió un token válido');
+    }
+
+    const payload = decodeJwtPayload(result.token) ?? {};
     const user: AuthUser = {
       id: payload.sub ?? '',
       username: payload.unique_name ?? credentials.username,
@@ -59,21 +50,18 @@ export const authService = {
       role: typeof payload.role === 'string' ? payload.role : 'admin',
     };
 
-    return { user, token: result.token };
+    // Preferimos el `exp` del propio token; si no viene, la fecha del backend
+    const expiracion =
+      getTokenExpiration(result.token) ??
+      (result.expiracion ? new Date(result.expiracion).getTime() : null);
+
+    return { user, token: result.token, expiracion: Number.isNaN(expiracion) ? null : expiracion };
   },
 
   logout: () => {
-    // Token is managed by zustand/persist — nothing extra needed
+    clearStoredAuth();
   },
 
-  getStoredToken: (): string | null => {
-    try {
-      const raw = localStorage.getItem('auth-storage');
-      if (!raw) return null;
-      const parsed = JSON.parse(raw) as { state?: { token?: string } };
-      return parsed?.state?.token ?? null;
-    } catch {
-      return null;
-    }
-  },
+  getStoredToken,
+  isTokenExpired,
 };

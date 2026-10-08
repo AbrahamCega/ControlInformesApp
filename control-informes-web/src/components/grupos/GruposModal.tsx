@@ -117,8 +117,8 @@ export default function GruposModal({ open, onClose }: GruposModalProps) {
     setSaving(true);
     try {
       if (editingId) {
-        const dto: ActualizarGrupoDto = { nombre: form.nombre, idCapitan: form.idCapitan };
-        await grupoService.actualizar(editingId, dto);
+        const dto: ActualizarGrupoDto = { idGrupo: editingId, nombre: form.nombre, idCapitan: form.idCapitan };
+        await grupoService.actualizar(dto);
         showNotification('Grupo actualizado', 'success');
       } else {
         const dto: CrearGrupoDto = { nombre: form.nombre, idCapitan: form.idCapitan };

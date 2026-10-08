@@ -61,7 +61,8 @@ function KpiCard({ title, value, icon, gradient }: KpiCardProps) {
           <Typography variant="body2" sx={{ color: '#637381', fontSize: '0.8rem', mb: 0.25 }}>
             {title}
           </Typography>
-          <Typography variant="h5" fontWeight={700} sx={{ color: '#1a2027' }}>
+          <Typography variant="h5"
+          sx={{ fontWeight: 700, color: '#1a2027', }}>
             {value}
           </Typography>
         </Box>
@@ -224,7 +225,8 @@ export default function ReportesPage() {
                   minWidth: 48, textAlign: 'center',
                 }}
               >
-                <Typography variant="body2" fontWeight={700} sx={{ color: row.textColor }}>
+                <Typography variant="body2"
+          sx={{ fontWeight: 700, color: row.textColor, }}>
                   {row.value}
                 </Typography>
               </Box>
@@ -263,7 +265,8 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
           <Typography variant="body2" color="text.secondary">
             {title}
           </Typography>
-          <Typography variant="h5" fontWeight={700}>
+          <Typography variant="h5"
+          sx={{ fontWeight: 700, }}>
             {value}
           </Typography>
         </Box>
